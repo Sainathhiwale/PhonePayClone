@@ -6,7 +6,6 @@ import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.bizanalyst.phonepay_clone.MainActivity;
 import com.bizanalyst.phonepay_clone.R;
 
 public class SplashActivity extends AppCompatActivity {
