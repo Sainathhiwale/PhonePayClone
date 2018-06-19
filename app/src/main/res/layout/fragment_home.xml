@@ -5,10 +5,531 @@
     android:layout_height="match_parent"
     tools:context=".ui.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+   <ScrollView
+      android:scrollbars="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <LinearLayout
+           android:orientation="vertical"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+           <TextView
+               android:layout_marginStart="8dp"
+               android:layout_marginTop="10dp"
+               android:layout_marginBottom="8dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="8dp"
+               android:text="@string/txt_money_transfers"
+               android:textColor="@android:color/black"
+               android:textStyle="bold"/>
+           <LinearLayout
+               android:orientation="vertical"
+               android:layout_margin="10dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
+
+               <LinearLayout
+                   android:orientation="horizontal"
+                   android:weightSum="4"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content">
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           android:layout_gravity="center_horizontal"
+                           android:layout_margin="5dp"
+                           android:background="@drawable/bg_offer_home"
+                           android:padding="10dp"
+                           android:src="@drawable/ic_to_contact"/>
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_to_contact"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           android:layout_gravity="center_horizontal"
+                           android:layout_margin="5dp"
+                           android:background="@drawable/bg_offer_home"
+                           android:padding="10dp"
+                           android:src="@drawable/ic_to_account" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_to_account"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           android:layout_gravity="center_horizontal"
+                           android:layout_margin="5dp"
+                           android:background="@drawable/bg_offer_home"
+                           android:padding="10dp"
+                           android:src="@drawable/ic_to_self" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_to_self"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           android:layout_gravity="center_horizontal"
+                           android:layout_margin="5dp"
+                           android:background="@drawable/bg_offer_home"
+                           android:padding="10dp"
+                           android:src="@drawable/ic_split_bill" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_split_bill"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+
+               </LinearLayout>
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:weightSum="4">
+
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           android:layout_gravity="center_horizontal"
+                           android:layout_margin="5dp"
+                           android:background="@drawable/bg_offer_home"
+                           android:padding="10dp"
+                           android:src="@drawable/ic_check_balance" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_check_bank_balance"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           android:layout_gravity="center_horizontal"
+                           android:layout_margin="5dp"
+                           android:background="@drawable/bg_offer_home"
+                           android:padding="10dp"
+                           android:src="@drawable/ic_wallet_topup" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_wallet_topup"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           android:layout_gravity="center_horizontal"
+                           android:layout_margin="5dp"
+                           android:background="@drawable/bg_offer_home"
+                           android:padding="10dp"
+                           android:src="@drawable/ic_add_reminders" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_add_reminders"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+                   <LinearLayout
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="40dp"
+                           android:layout_height="40dp"
+                           android:layout_gravity="center_horizontal"
+                           android:layout_margin="5dp"
+                           android:background="@drawable/bg_offer_home"
+                           android:padding="10dp"
+                           android:src="@drawable/ic_request_money" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_request_money"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+               </LinearLayout>
+
+
+           </LinearLayout>
+<!-- other parts -->
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="8dp"
+               android:background="@color/grey_300" />
+
+           <RelativeLayout
+               android:id="@+id/layout_viewPager"
+               android:layout_width="match_parent"
+               android:layout_height="155dp">
+
+               <android.support.v4.view.ViewPager
+                   android:id="@+id/view_pager_home"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content" />
+
+               <LinearLayout
+                   android:id="@+id/layoutDots_home"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:layout_below="@id/view_pager_home"
+                   android:layout_marginTop="-30dp"
+                   android:gravity="center_vertical|center_horizontal"
+                   android:orientation="horizontal" />
+
+           </RelativeLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="8dp"
+               android:background="@color/grey_300" />
+
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginBottom="8dp"
+               android:layout_marginStart="10dp"
+               android:layout_marginTop="8dp"
+               android:text="@string/txt_recharge_pay_bills"
+               android:textColor="@android:color/black"
+               android:textStyle="bold"
+               android:layout_marginLeft="10dp" />
+
+           <LinearLayout
+               android:id="@+id/lay_recharge_and_pay_bills"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="10dp"
+               android:orientation="vertical">
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:weightSum="4">
+
+                   <LinearLayout
+                       android:id="@+id/lay_mobile_home"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="match_parent"
+                           android:layout_height="30dp"
+                           android:layout_margin="5dp"
+                           android:src="@drawable/ic_mobile_green" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_mobile"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:id="@+id/lay_mobile_electricity"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="match_parent"
+                           android:layout_height="30dp"
+                           android:layout_margin="5dp"
+                           android:src="@drawable/ic_lightbulb_green" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_electricity"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:id="@+id/lay_credit_card"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="match_parent"
+                           android:layout_height="30dp"
+                           android:layout_margin="5dp"
+                           android:src="@drawable/ic_payment_green" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_credit_card"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:id="@+id/lay_broadband"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="match_parent"
+                           android:layout_height="30dp"
+                           android:layout_margin="5dp"
+                           android:src="@drawable/ic_router_green" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_broadband"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:weightSum="4">
+
+                   <LinearLayout
+                       android:id="@+id/lay_insurance"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="match_parent"
+                           android:layout_height="30dp"
+                           android:layout_margin="5dp"
+                           android:src="@drawable/ic_insurance_green" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_insurance"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:id="@+id/lay_water"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="match_parent"
+                           android:layout_height="30dp"
+                           android:layout_margin="5dp"
+                           android:src="@drawable/ic_water_green" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_water"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+
+               </LinearLayout>
+
+           </LinearLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="8dp"
+               android:background="@color/grey_300" />
+
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginBottom="8dp"
+               android:layout_marginStart="10dp"
+               android:layout_marginTop="8dp"
+               android:text="@string/txt_buy_on_phonepe"
+               android:textColor="@android:color/black"
+               android:textStyle="bold"
+               android:layout_marginLeft="10dp" />
+
+           <LinearLayout
+               android:id="@+id/lay_buy_on_phonepe"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_margin="10dp"
+               android:orientation="vertical">
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:weightSum="4">
+
+                   <LinearLayout
+                       android:id="@+id/lay_gift_cards"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="match_parent"
+                           android:layout_height="30dp"
+                           android:layout_margin="5dp"
+                           android:src="@drawable/ic_gift_card_green" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_gift_cards"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+
+                   <LinearLayout
+                       android:id="@+id/lay_bus"
+                       android:layout_width="0dp"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:orientation="vertical">
+
+                       <ImageView
+                           android:layout_width="match_parent"
+                           android:layout_height="30dp"
+                           android:layout_margin="5dp"
+                           android:src="@drawable/ic_bus_green" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_margin="5dp"
+                           android:gravity="center_horizontal"
+                           android:text="@string/txt_red_bus"
+                           android:textColor="@android:color/black" />
+
+                   </LinearLayout>
+
+               </LinearLayout>
+
+           </LinearLayout>
+
+           <View
+               android:layout_width="match_parent"
+               android:layout_height="8dp"
+               android:background="@color/grey_300" />
+
+       </LinearLayout>
+   </ScrollView>
 
 </FrameLayout>
