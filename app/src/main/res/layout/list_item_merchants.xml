@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:padding="4dp"
+    android:background="@drawable/bg_merchant"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_terms_conditions"
+        android:gravity="end"
+        android:textSize="6sp"
+        tools:ignore="SmallSp" />
+
+    <TextView
+        android:id="@+id/txv_merchant_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textStyle="bold|italic"
+        tools:text="KFC"
+        tools:textColor="@android:color/holo_red_dark" />
+
+    <TextView
+        android:id="@+id/txv_discount_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18sp"
+        android:gravity="center"
+        android:textSize="14sp"
+        tools:text="@string/txt_discount_flat"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/txv_discount_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:text="@string/txt_discount_30_percent"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/txv_discount_medium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|top"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="@string/txt_discount_cashback"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/txv_discount_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:textSize="12sp"
+        tools:text="On 2 purchases every month" />
+</LinearLayout>
