@@ -167,6 +167,7 @@ public class OffersFragment extends Fragment {
             dotsLayout.addView(mTxvDotsArray[i]);
         }
 
+
         if (mTxvDotsArray.length > 0)
             mTxvDotsArray[currentPage].setTextColor(getResources().getColor(R.color.grey_400));
     }
