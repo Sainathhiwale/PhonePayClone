@@ -65,5 +65,15 @@
     <string name="txt_name_initials">DB</string>
     <string name="txt_month">Month</string>
     <string name="txt_filters">Filters</string>
+    <string name="title_loans">Loans</string>
+    <string name="txt_personal_loan">Personal Loan</string>
+    <string name="txt_mutual_fund_loan">Mutual Fund Loan</string>
+    <string name="txt_gold_loan">Gold Loan</string>
+    <string name="txt_credit_score">Credit Score</string>
+    <string name="title_precious_metals">Gold, Silver &amp; Platinum</string>
+    <string name="txt_daily_gold">Daily Gold with ₹10</string>
+    <string name="txt_buy_gold">Buy Gold</string>
+    <string name="txt_daily_silver">Daily Silver with ₹10</string>
+    <string name="txt_daily_platinum">Daily Platinum</string>
 
 </resources>
