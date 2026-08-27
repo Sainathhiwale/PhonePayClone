@@ -1,62 +1,40 @@
-package com.bizanalyst.phonepay_clone.adapter;
+package com.bizanalyst.phonepay_clone.adapter
 
-import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.bizanalyst.phonepay_clone.R
+import com.bizanalyst.phonepay_clone.model.MerchantModel
+import java.util.*
 
-import com.bizanalyst.phonepay_clone.R;
-import com.bizanalyst.phonepay_clone.model.MerchantModel;
+class MerchantsAdapter(private val context: Context?, private val merchantList: ArrayList<MerchantModel>) : RecyclerView.Adapter<MerchantsAdapter.MyViewHolder>() {
 
-import java.util.ArrayList;
-
-public class MerchantsAdapter extends RecyclerView.Adapter<MerchantsAdapter.MyViewHolder> {
-    ArrayList<MerchantModel>merchantList;
-    Context context;
-
-    public MerchantsAdapter(Context context, ArrayList<MerchantModel> merchantList) {
-        this.merchantList = merchantList;
-        this.context = context;
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_merchants, parent, false)
+        return MyViewHolder(view)
     }
 
-    @NonNull
-    @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_merchants, parent, false);
-        return new MyViewHolder(view);
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        val merchant = merchantList[position]
+        holder.mTxvMerchantName.text = merchant.merchant_name
+        holder.mTxvDiscountType.text = merchant.discount_type
+        holder.mTxvDiscountAmount.text = merchant.discount_amount
+        holder.mTxvDiscountMedium.text = merchant.discount_medium
+        holder.mTxvDiscountDescription.text = merchant.discount_description
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
-        holder.mTxvMerchantName.setText(merchantList.get(position).getMerchant_name());
-        holder.mTxvDiscountType.setText(merchantList.get(position).getDiscount_type());
-        holder.mTxvDiscountAmount.setText(merchantList.get(position).getDiscount_amount());
-        holder.mTxvDiscountMedium.setText(merchantList.get(position).getDiscount_medium());
-        holder.mTxvDiscountDescription.setText(merchantList.get(position).getDiscount_description());
+    override fun getItemCount(): Int {
+        return merchantList.size
     }
 
-    @Override
-    public int getItemCount() {
-        return merchantList.size();
+     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val mTxvMerchantName: TextView = itemView.findViewById(R.id.txv_merchant_name)
+        val mTxvDiscountType: TextView = itemView.findViewById(R.id.txv_discount_type)
+        val mTxvDiscountAmount: TextView = itemView.findViewById(R.id.txv_discount_amount)
+        val mTxvDiscountMedium: TextView = itemView.findViewById(R.id.txv_discount_medium)
+        val mTxvDiscountDescription: TextView = itemView.findViewById(R.id.txv_discount_description)
     }
-
-    class MyViewHolder extends RecyclerView.ViewHolder{
-        private TextView mTxvMerchantName, mTxvDiscountType, mTxvDiscountAmount, mTxvDiscountMedium, mTxvDiscountDescription;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            mTxvMerchantName = itemView.findViewById(R.id.txv_merchant_name);
-            mTxvDiscountType = itemView.findViewById(R.id.txv_discount_type);
-            mTxvDiscountAmount = itemView.findViewById(R.id.txv_discount_amount);
-            mTxvDiscountMedium = itemView.findViewById(R.id.txv_discount_medium);
-            mTxvDiscountDescription = itemView.findViewById(R.id.txv_discount_description);
-
-        }
-    }
-
 }

@@ -1,117 +1,112 @@
-package com.bizanalyst.phonepay_clone.ui;
+package com.bizanalyst.phonepay_clone.ui
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.TextView;
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import com.bizanalyst.phonepay_clone.R
+import com.bizanalyst.phonepay_clone.fragment.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import android.widget.Toast;
+class MainActivity : AppCompatActivity() {
+    private var mToolbar: Toolbar? = null
+    private var mTxvToolbarTitle: TextView? = null
+    private var mBottomNavigationView: BottomNavigationView? = null
+    private var homeFragment: HomeFragment? = null
+    private var accountFragment: AccountFragment? = null
+    private var offersFragment: OffersFragment? = null
+    private var paymentFragment: PaymentFragment? = null
+    private var transactionsFragment: TransactionsFragment? = null
 
-import com.bizanalyst.phonepay_clone.R;
-import com.bizanalyst.phonepay_clone.fragment.AccountFragment;
-import com.bizanalyst.phonepay_clone.fragment.HomeFragment;
-import com.bizanalyst.phonepay_clone.fragment.OffersFragment;
-import com.bizanalyst.phonepay_clone.fragment.PaymentFragment;
-import com.bizanalyst.phonepay_clone.fragment.TransactionsFragment;
-
-public class MainActivity extends AppCompatActivity {
-    private Toolbar mToolbar;
-    private TextView mTxvToolbarTitle;
-    private BottomNavigationView mBottomNavigationView;
-    private HomeFragment homeFragment;
-    private AccountFragment accountFragment;
-    private OffersFragment offersFragment;
-    private PaymentFragment paymentFragment;
-    private TransactionsFragment transactionsFragment;
-
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = item -> {
-        int itemId = item.getItemId();
-        if (itemId == R.id.navigation_home) {
-            mTxvToolbarTitle.setText(R.string.app_name);
-            setUpFragment(homeFragment);
-            return true;
-        } else if (itemId == R.id.navigation_offers) {
-            mTxvToolbarTitle.setText(R.string.title_offers);
-            setUpFragment(offersFragment);
-            return true;
-        } else if (itemId == R.id.navigation_payment) {
-            mTxvToolbarTitle.setText(R.string.title_payment);
-            setUpFragment(paymentFragment);
-            return true;
-        } else if (itemId == R.id.navigation_account) {
-            mTxvToolbarTitle.setText(R.string.title_my_account);
-            setUpFragment(accountFragment);
-            return true;
-        } else if (itemId == R.id.navigation_transactions) {
-            mTxvToolbarTitle.setText(R.string.title_transactions);
-            setUpFragment(transactionsFragment);
-            return true;
-        }
-        return false;
-    };
-
-    public void initViews() {
-        setContentView(R.layout.activity_main);
-        mToolbar = findViewById(R.id.toolbar);
-        mTxvToolbarTitle = findViewById(R.id.txv_toolbar_title);
-        mBottomNavigationView = findViewById(R.id.navigation);
-        homeFragment = HomeFragment.newInstance();
-        accountFragment = AccountFragment.newInstance();
-        offersFragment = OffersFragment.newInstance();
-        paymentFragment = PaymentFragment.newInstance();
-        transactionsFragment = TransactionsFragment.newInstance();
-
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initViews();
-
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("");
-        mTxvToolbarTitle.setText(R.string.app_name);
-
-        mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        mBottomNavigationView.setLabelVisibilityMode(com.google.android.material.navigation.NavigationBarView.LABEL_VISIBILITY_LABELED);
-
-        FragmentTransaction buildBeginTransaction = getSupportFragmentManager().beginTransaction();
-        buildBeginTransaction.replace(R.id.container_home, homeFragment);
-        buildBeginTransaction.commit();
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_home, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-        if (itemId == R.id.menu_invite) {
-            Toast.makeText(this, "Invite and Earn", Toast.LENGTH_SHORT).show();
-            return true;
-        } else if (itemId == R.id.menu_notification) {
-            Toast.makeText(this, "Notification", Toast.LENGTH_SHORT).show();
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
+    private val mOnNavigationItemSelectedListener = NavigationBarView.OnItemSelectedListener { item ->
+        val itemId = item.itemId
+        when (itemId) {
+            R.id.navigation_home -> {
+                mTxvToolbarTitle?.setText(R.string.app_name)
+                homeFragment?.let { setUpFragment(it) }
+                true
+            }
+            R.id.navigation_offers -> {
+                mTxvToolbarTitle?.setText(R.string.title_offers)
+                offersFragment?.let { setUpFragment(it) }
+                true
+            }
+            R.id.navigation_payment -> {
+                mTxvToolbarTitle?.setText(R.string.title_payment)
+                paymentFragment?.let { setUpFragment(it) }
+                true
+            }
+            R.id.navigation_account -> {
+                mTxvToolbarTitle?.setText(R.string.title_my_account)
+                accountFragment?.let { setUpFragment(it) }
+                true
+            }
+            R.id.navigation_transactions -> {
+                mTxvToolbarTitle?.setText(R.string.title_transactions)
+                transactionsFragment?.let { setUpFragment(it) }
+                true
+            }
+            else -> false
         }
     }
 
-     private void setUpFragment(Fragment fragment){
-         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-         fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
-         fragmentTransaction.replace(R.id.container_home, fragment);
-         fragmentTransaction.commit();
-     }
+    fun initViews() {
+        setContentView(R.layout.activity_main)
+        mToolbar = findViewById(R.id.toolbar)
+        mTxvToolbarTitle = findViewById(R.id.txv_toolbar_title)
+        mBottomNavigationView = findViewById(R.id.navigation)
+        homeFragment = HomeFragment.newInstance()
+        accountFragment = AccountFragment.newInstance()
+        offersFragment = OffersFragment.newInstance()
+        paymentFragment = PaymentFragment.newInstance()
+        transactionsFragment = TransactionsFragment.newInstance()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initViews()
+
+        setSupportActionBar(mToolbar)
+        supportActionBar?.title = ""
+        mTxvToolbarTitle?.setText(R.string.app_name)
+
+        mBottomNavigationView?.setOnItemSelectedListener(mOnNavigationItemSelectedListener)
+        mBottomNavigationView?.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
+
+        val buildBeginTransaction = supportFragmentManager.beginTransaction()
+        homeFragment?.let { buildBeginTransaction.replace(R.id.container_home, it) }
+        buildBeginTransaction.commit()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_home, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
+        return when (itemId) {
+            R.id.menu_invite -> {
+                Toast.makeText(this, "Invite and Earn", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.menu_notification -> {
+                Toast.makeText(this, "Notification", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun setUpFragment(fragment: Fragment) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
+        fragmentTransaction.replace(R.id.container_home, fragment)
+        fragmentTransaction.commit()
+    }
 }

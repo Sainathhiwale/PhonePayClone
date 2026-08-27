@@ -1,180 +1,162 @@
-package com.bizanalyst.phonepay_clone.fragment;
+package com.bizanalyst.phonepay_clone.fragment
 
+import android.content.Context
+import android.os.Bundle
+import android.text.Html
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
+import com.bizanalyst.phonepay_clone.R
+import com.bizanalyst.phonepay_clone.adapter.MerchantsAdapter
+import com.bizanalyst.phonepay_clone.adapter.OffersAdapter
+import com.bizanalyst.phonepay_clone.adapter.OffersViewPagerAdapter
+import com.bizanalyst.phonepay_clone.model.MerchantModel
+import com.bizanalyst.phonepay_clone.model.OffersModel
+import java.util.*
 
-import android.content.Context;
-import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import android.text.Html;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+class OffersFragment : Fragment() {
+    private var mContext: Context? = null
+    private var mRvOffers: RecyclerView? = null
+    private var mRvOfflineMerchants: RecyclerView? = null
+    private var mRvOnlineMerchants: RecyclerView? = null
+    private var mAdapter: MerchantsAdapter? = null
+    private var mViewPager: ViewPager? = null
+    private var offerList: ArrayList<String>? = null
+    private var dotsLayout: LinearLayout? = null
+    private var timer: Timer? = null
+    private var count = 0
 
-
-import com.bizanalyst.phonepay_clone.R;
-import com.bizanalyst.phonepay_clone.adapter.MerchantsAdapter;
-import com.bizanalyst.phonepay_clone.adapter.OffersAdapter;
-import com.bizanalyst.phonepay_clone.adapter.OffersViewPagerAdapter;
-import com.bizanalyst.phonepay_clone.model.MerchantModel;
-import com.bizanalyst.phonepay_clone.model.OffersModel;
-
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
-public class OffersFragment extends Fragment {
-
-    private Context context;
-    private RecyclerView mRvOffers, mRvOfflineMerchants, mRvOnlineMerchants;
-    private MerchantsAdapter mAdapter;
-    private ViewPager mViewPager;
-    private ArrayList<String> offerList;
-    private LinearLayout dotsLayout;
-    private Timer timer;
-    private int count = 0;
-
-    public OffersFragment() {
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_offers, container, false)
+        initViews(view)
+        setUpViewPager()
 
-    public static OffersFragment newInstance() {
-        OffersFragment fragment = new OffersFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
+        val offlineMerchantList = ArrayList<MerchantModel>()
+        offlineMerchantList.add(MerchantModel("KFC", "Flat", resources.getString(R.string.rupees) + "50", resources.getString(R.string.txt_discount_cashback), "Applicable Twice per user"))
+        offlineMerchantList.add(MerchantModel("McDonalds", "Steal Deals From", resources.getString(R.string.rupees) + "49*", resources.getString(R.string.txt_discount_onwards), ""))
+        offlineMerchantList.add(MerchantModel("CCD", "Get", resources.getString(R.string.txt_discount_30_percent), resources.getString(R.string.txt_discount_cashback), "On 2 purchases every month"))
+        offlineMerchantList.add(MerchantModel("Spencers", "Flat", resources.getString(R.string.rupees) + "50", resources.getString(R.string.txt_discount_cashback), "On 2 purchases every month"))
+        offlineMerchantList.add(MerchantModel("Apollo", "Flat", resources.getString(R.string.rupees) + "50", resources.getString(R.string.txt_discount_cashback), "On 2 purchases every month"))
+        offlineMerchantList.add(MerchantModel("Metro", "Flat", resources.getString(R.string.rupees) + "25", resources.getString(R.string.txt_discount_cashback), "On Transactions of 100 or more"))
+        mAdapter = MerchantsAdapter(mContext, offlineMerchantList)
+        mRvOfflineMerchants?.adapter = mAdapter
 
-    private void initViews(View view) {
-        mViewPager= view.findViewById(R.id.view_pager_offers);
-        dotsLayout = view.findViewById(R.id.layoutDots);
-        mRvOffers = view.findViewById(R.id.rv_bill_pay_offers);
-        mRvOfflineMerchants = view.findViewById(R.id.rv_offline_merchants);
-        mRvOnlineMerchants = view.findViewById(R.id.rv_online_merchants);
-        mRvOfflineMerchants.setNestedScrollingEnabled(false);
-        mRvOnlineMerchants.setNestedScrollingEnabled(false);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        mRvOffers.setLayoutManager(layoutManager);
-        mRvOfflineMerchants.setLayoutManager(new GridLayoutManager(context, 3));
-        mRvOnlineMerchants.setLayoutManager(new GridLayoutManager(context, 3));
-    }
+        val onlineMerchantList = ArrayList<MerchantModel>()
+        onlineMerchantList.add(MerchantModel("Swiggy", "Get", resources.getString(R.string.txt_discount_25_percent), resources.getString(R.string.txt_discount_cashback), "On 1st and 3rd Transactions"))
+        onlineMerchantList.add(MerchantModel("Coolwinks", "Get", resources.getString(R.string.txt_discount_25_percent), resources.getString(R.string.txt_discount_cashback), "On 1st ever Purchase"))
+        onlineMerchantList.add(MerchantModel("Faasos", "Get", resources.getString(R.string.txt_discount_30_percent), resources.getString(R.string.txt_discount_cashback), "On 1st and 3rd Transactions"))
+        onlineMerchantList.add(MerchantModel("ZopNow", "Upto", resources.getString(R.string.txt_discount_25_percent), resources.getString(R.string.txt_discount_cashback), "On 1st and 3rd Transactions"))
+        onlineMerchantList.add(MerchantModel("Box8", "Get", resources.getString(R.string.txt_discount_30_percent), resources.getString(R.string.txt_discount_cashback), "On 1st Transaction"))
+        onlineMerchantList.add(MerchantModel("Clovia", "Get", resources.getString(R.string.txt_discount_10_percent), resources.getString(R.string.txt_discount_cashback), "On 1st Transaction"))
+        mAdapter = MerchantsAdapter(mContext, onlineMerchantList)
+        mRvOnlineMerchants?.adapter = mAdapter
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_offers, container, false);
-        initViews(view);
-        setUpViewPager();
+        val offersList = ArrayList<OffersModel>()
+        offersList.add(OffersModel(R.drawable.ic_bill_green, "Bill Payment", "30% CashBack*"))
+        offersList.add(OffersModel(R.drawable.ic_recharge_green, "Recharge", "20% CashBack*"))
+        offersList.add(OffersModel(R.drawable.ic_lightbulb_green, "Electricity", "15% CashBack*"))
+        val adapter = OffersAdapter(mContext, offersList)
+        mRvOffers?.adapter = adapter
 
-        ArrayList<MerchantModel> offlineMerchantList = new ArrayList<>();
-        offlineMerchantList.add(new MerchantModel("KFC", "Flat",getResources().getString(R.string.rupees) + "50", getResources().getString(R.string.txt_discount_cashback), "Applicable Twice per user"));
-        offlineMerchantList.add(new MerchantModel("McDonalds", "Steal Deals From", getResources().getString(R.string.rupees) + "49*", getResources().getString(R.string.txt_discount_onwards), ""));
-        offlineMerchantList.add(new MerchantModel("CCD", "Get", getResources().getString(R.string.txt_discount_30_percent), getResources().getString(R.string.txt_discount_cashback), "On 2 purchases every month"));
-        offlineMerchantList.add(new MerchantModel("Spencers", "Flat", getResources().getString(R.string.rupees) + "50", getResources().getString(R.string.txt_discount_cashback), "On 2 purchases every month"));
-        offlineMerchantList.add(new MerchantModel("Apollo", "Flat", getResources().getString(R.string.rupees) + "50", getResources().getString(R.string.txt_discount_cashback), "On 2 purchases every month"));
-        offlineMerchantList.add(new MerchantModel("Metro", "Flat", getResources().getString(R.string.rupees) + "25", getResources().getString(R.string.txt_discount_cashback), "On Transactions of 100 or more"));
-        mAdapter = new MerchantsAdapter(context, offlineMerchantList);
-        mRvOfflineMerchants.setAdapter(mAdapter);
-
-        ArrayList<MerchantModel> onlineMerchantList = new ArrayList<>();
-        onlineMerchantList.add(new MerchantModel("Swiggy", "Get", getResources().getString(R.string.txt_discount_25_percent), getResources().getString(R.string.txt_discount_cashback), "On 1st and 3rd Transactions"));
-        onlineMerchantList.add(new MerchantModel("Coolwinks", "Get", getResources().getString(R.string.txt_discount_25_percent), getResources().getString(R.string.txt_discount_cashback), "On 1st ever Purchase"));
-        onlineMerchantList.add(new MerchantModel("Faasos", "Get", getResources().getString(R.string.txt_discount_30_percent), getResources().getString(R.string.txt_discount_cashback), "On 1st and 3rd Transactions"));
-        onlineMerchantList.add(new MerchantModel("ZopNow", "Upto", getResources().getString(R.string.txt_discount_25_percent), getResources().getString(R.string.txt_discount_cashback), "On 1st and 3rd Transactions"));
-        onlineMerchantList.add(new MerchantModel("Box8", "Get", getResources().getString(R.string.txt_discount_30_percent), getResources().getString(R.string.txt_discount_cashback), "On 1st Transaction"));
-        onlineMerchantList.add(new MerchantModel("Clovia", "Get", getResources().getString(R.string.txt_discount_10_percent), getResources().getString(R.string.txt_discount_cashback), "On 1st Transaction"));
-        mAdapter = new MerchantsAdapter(context, onlineMerchantList);
-        mRvOnlineMerchants.setAdapter(mAdapter);
-
-        ArrayList<OffersModel> offersList = new ArrayList<>();
-        offersList.add(new OffersModel(R.drawable.ic_bill_green, "Bill Payment", "30% CashBack*"));
-        offersList.add(new OffersModel(R.drawable.ic_recharge_green, "Recharge", "20% CashBack*"));
-        offersList.add(new OffersModel(R.drawable.ic_lightbulb_green, "Electricity", "15% CashBack*"));
-        OffersAdapter adapter = new OffersAdapter(context, offersList);
-        mRvOffers.setAdapter(adapter);
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onPageSelected(position: Int) {
+                addBottomDots(position)
             }
 
-            @Override
-            public void onPageSelected(int position) {
-                addBottomDots(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+            override fun onPageScrollStateChanged(state: Int) {}
+        })
 
         //timer for auto Sliding
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                getActivity().runOnUiThread(() -> {
+        timer = Timer()
+        timer?.schedule(object : TimerTask() {
+            override fun run() {
+                activity?.runOnUiThread {
                     if (count <= 5) {
-                        mViewPager.setCurrentItem(count);
-                        count++;
+                        mViewPager?.currentItem = count
+                        count++
                     } else {
-                        count = 0;
-                        mViewPager.setCurrentItem(count);
-
+                        count = 0
+                        mViewPager?.currentItem = count
                     }
-                });
+                }
             }
-        }, 500, 2000);
+        }, 500, 2000)
 
-        return view;
+        return view
     }
 
-    private void setUpViewPager() {
-        offerList = new ArrayList<>();
-        offerList.add("Offer 1");
-        offerList.add("Offer 2");
-        offerList.add("Offer 3");
-        offerList.add("Offer 4");
-        offerList.add("Offer 5");
-        OffersViewPagerAdapter viewPagerAdapter = new OffersViewPagerAdapter(context, offerList);
-        mViewPager.setAdapter(viewPagerAdapter);
-        mViewPager.setClipToPadding(false);
-        mViewPager.setPadding(40, 0, 40, 20);
-        mViewPager.setPageMargin(20);
-        addBottomDots(0);
+    private fun initViews(view: View) {
+        mViewPager = view.findViewById(R.id.view_pager_offers)
+        dotsLayout = view.findViewById(R.id.layoutDots)
+        mRvOffers = view.findViewById(R.id.rv_bill_pay_offers)
+        mRvOfflineMerchants = view.findViewById(R.id.rv_offline_merchants)
+        mRvOnlineMerchants = view.findViewById(R.id.rv_online_merchants)
+        mRvOfflineMerchants?.isNestedScrollingEnabled = false
+        mRvOnlineMerchants?.isNestedScrollingEnabled = false
+        val layoutManager = LinearLayoutManager(mContext)
+        layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        mRvOffers?.layoutManager = layoutManager
+        mRvOfflineMerchants?.layoutManager = GridLayoutManager(mContext, 3)
+        mRvOnlineMerchants?.layoutManager = GridLayoutManager(mContext, 3)
     }
 
-    private void addBottomDots(int currentPage) {
-        TextView[] mTxvDotsArray = new TextView[offerList.size()];
+    private fun setUpViewPager() {
+        offerList = ArrayList()
+        offerList?.add("Offer 1")
+        offerList?.add("Offer 2")
+        offerList?.add("Offer 3")
+        offerList?.add("Offer 4")
+        offerList?.add("Offer 5")
+        val viewPagerAdapter = OffersViewPagerAdapter(mContext, offerList)
+        mViewPager?.adapter = viewPagerAdapter
+        mViewPager?.clipToPadding = false
+        mViewPager?.setPadding(40, 0, 40, 20)
+        mViewPager?.pageMargin = 20
+        addBottomDots(0)
+    }
 
-        dotsLayout.removeAllViews();
-        for (int i = 0; i < mTxvDotsArray.length; i++) {
-            mTxvDotsArray[i] = new TextView(context);
-            mTxvDotsArray[i].setText(Html.fromHtml("&#8226;"));
-            mTxvDotsArray[i].setTextSize(35);
-            mTxvDotsArray[i].setTextColor(getResources().getColor(android.R.color.darker_gray));
-            dotsLayout.addView(mTxvDotsArray[i]);
+    private fun addBottomDots(currentPage: Int) {
+        offerList?.let {
+            val mTxvDotsArray = arrayOfNulls<TextView>(it.size)
+            dotsLayout?.removeAllViews()
+            for (i in mTxvDotsArray.indices) {
+                mTxvDotsArray[i] = TextView(mContext)
+                mTxvDotsArray[i]?.text = Html.fromHtml("&#8226;")
+                mTxvDotsArray[i]?.textSize = 35f
+                mTxvDotsArray[i]?.setTextColor(resources.getColor(android.R.color.darker_gray))
+                dotsLayout?.addView(mTxvDotsArray[i])
+            }
+            if (mTxvDotsArray.isNotEmpty()) {
+                mTxvDotsArray[currentPage]?.setTextColor(resources.getColor(R.color.grey_400))
+            }
         }
-
-
-        if (mTxvDotsArray.length > 0)
-            mTxvDotsArray[currentPage].setTextColor(getResources().getColor(R.color.grey_400));
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        timer.cancel();
+    override fun onDetach() {
+        super.onDetach()
+        timer?.cancel()
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(): OffersFragment {
+            val fragment = OffersFragment()
+            val args = Bundle()
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

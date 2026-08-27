@@ -1,51 +1,34 @@
-package com.bizanalyst.phonepay_clone.adapter;
+package com.bizanalyst.phonepay_clone.adapter
 
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.viewpager.widget.PagerAdapter
+import com.bizanalyst.phonepay_clone.R
+import java.util.*
 
-import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.PagerAdapter;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+class OffersViewPagerAdapter(private val context: Context?, private val offersList: ArrayList<String>?) : PagerAdapter() {
 
-import com.bizanalyst.phonepay_clone.R;
-
-import java.util.ArrayList;
-
-public class OffersViewPagerAdapter extends PagerAdapter {
-
-    private Context context;
-    private ArrayList<String> offersList;
-
-    public OffersViewPagerAdapter(Context context, ArrayList<String> offersList) {
-        this.context = context;
-        this.offersList = offersList;
+    override fun instantiateItem(container: ViewGroup, position: Int): Any {
+        val view = LayoutInflater.from(context).inflate(R.layout.item_layout_offers_viewpager, container, false)
+        val txvOffer = view.findViewById<TextView>(R.id.txv_lay_1)
+        txvOffer.text = offersList?.get(position)
+        container.addView(view)
+        return view
     }
 
-    @NonNull
-    @Override
-    public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_layout_offers_viewpager, container, false);
-        TextView txvOffer = view.findViewById(R.id.txv_lay_1);
-        txvOffer.setText(offersList.get(position));
-        container.addView(view);
-        return view;
+    override fun getCount(): Int {
+        return offersList?.size ?: 0
     }
 
-    @Override
-    public int getCount() {
-        return offersList.size();
+    override fun isViewFromObject(view: View, `object`: Any): Boolean {
+        return view === `object`
     }
 
-    @Override
-    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == object;
-    }
-
-    @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        View view = (View) object;
-        container.removeView(view);
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        val view = `object` as View
+        container.removeView(view)
     }
 }

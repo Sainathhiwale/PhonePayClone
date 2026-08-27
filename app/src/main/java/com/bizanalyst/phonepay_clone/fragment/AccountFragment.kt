@@ -1,39 +1,32 @@
-package com.bizanalyst.phonepay_clone.fragment;
+package com.bizanalyst.phonepay_clone.fragment
 
+import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.bizanalyst.phonepay_clone.R
 
-import android.content.Context;
-import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+class AccountFragment : Fragment() {
+    private var mContext: Context? = null
 
-import com.bizanalyst.phonepay_clone.R;
-
-
-public class AccountFragment extends Fragment {
-    private Context context;
-
-    public AccountFragment() {
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.context = context;
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_account, container, false)
     }
 
-    public static AccountFragment newInstance() {
-        AccountFragment fragment = new AccountFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    companion object {
+        @JvmStatic
+        fun newInstance(): AccountFragment {
+            val fragment = AccountFragment()
+            val args = Bundle()
+            fragment.arguments = args
+            return fragment
+        }
     }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_account, container, false);
-    }
-
 }

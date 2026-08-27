@@ -1,66 +1,43 @@
-package com.bizanalyst.phonepay_clone.adapter;
+package com.bizanalyst.phonepay_clone.adapter
 
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.bizanalyst.phonepay_clone.R
+import com.bizanalyst.phonepay_clone.model.TransactionModel
+import java.util.*
 
-import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+class TransactionsAdapter(private val context: Context?, private val transactionList: ArrayList<TransactionModel>) : RecyclerView.Adapter<TransactionsAdapter.MyViewHolder>() {
 
-import com.bizanalyst.phonepay_clone.R;
-import com.bizanalyst.phonepay_clone.model.TransactionModel;
-
-import java.util.ArrayList;
-
-public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.MyViewHolder> {
-
-    private ArrayList<TransactionModel> transactionList;
-    private Context context;
-
-    public TransactionsAdapter(Context context, ArrayList<TransactionModel> transactionList) {
-        this.transactionList = transactionList;
-        this.context = context;
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_transactions, parent, false)
+        return MyViewHolder(view)
     }
 
-    @NonNull
-    @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_transactions, parent, false);
-        return new MyViewHolder(view);
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        val transaction = transactionList[position]
+        holder.mImvTransactionType.setImageResource(transaction.image_transaction_type)
+        holder.mTxvTransactionDate.text = transaction.transaction_date
+        holder.mTxvTransactionType.text = transaction.transaction_type
+        holder.mTxvTransactionMerchant.text = transaction.transaction_merchant
+        holder.mTxvTransactionAmount.text = transaction.transaction_amount
+        holder.mTxvTransactionCreditedDebited.text = transaction.transaction_credited_debited
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.mImvTransactionType.setImageResource(transactionList.get(position).getImage_transaction_type());
-        holder.mTxvTransactionDate.setText(transactionList.get(position).getTransaction_date());
-        holder.mTxvTransactionType.setText(transactionList.get(position).getTransaction_type());
-        holder.mTxvTransactionMerchant.setText(transactionList.get(position).getTransaction_merchant());
-        holder.mTxvTransactionAmount.setText(transactionList.get(position).getTransaction_amount());
-        holder.mTxvTransactionCreditedDebited.setText(transactionList.get(position).getTransaction_credited_debited());
+    override fun getItemCount(): Int {
+        return transactionList.size
     }
 
-    @Override
-    public int getItemCount() {
-        return transactionList.size();
-    }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-
-        private ImageView mImvTransactionType;
-        private TextView mTxvTransactionDate, mTxvTransactionType, mTxvTransactionMerchant, mTxvTransactionAmount, mTxvTransactionCreditedDebited;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-
-            mImvTransactionType = itemView.findViewById(R.id.imv_transaction_type);
-            mTxvTransactionDate = itemView.findViewById(R.id.txv_transaction_date);
-            mTxvTransactionType = itemView.findViewById(R.id.txv_transactions_type);
-            mTxvTransactionMerchant = itemView.findViewById(R.id.txv_transaction_merchant);
-            mTxvTransactionAmount = itemView.findViewById(R.id.txv_transactions_amount);
-            mTxvTransactionCreditedDebited = itemView.findViewById(R.id.txv_transaction_credited_debited);
-        }
+     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val mImvTransactionType: ImageView = itemView.findViewById(R.id.imv_transaction_type)
+        val mTxvTransactionDate: TextView = itemView.findViewById(R.id.txv_transaction_date)
+        val mTxvTransactionType: TextView = itemView.findViewById(R.id.txv_transactions_type)
+        val mTxvTransactionMerchant: TextView = itemView.findViewById(R.id.txv_transaction_merchant)
+        val mTxvTransactionAmount: TextView = itemView.findViewById(R.id.txv_transactions_amount)
+        val mTxvTransactionCreditedDebited: TextView = itemView.findViewById(R.id.txv_transaction_credited_debited)
     }
 }

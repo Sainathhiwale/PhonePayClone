@@ -1,73 +1,58 @@
-package com.bizanalyst.phonepay_clone.fragment;
+package com.bizanalyst.phonepay_clone.fragment
 
+import android.content.Context
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.bizanalyst.phonepay_clone.R
+import com.google.android.material.tabs.TabLayout
 
-import android.content.Context;
-import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
+class PaymentFragment : Fragment() {
+    private var mContext: Context? = null
+    private var mTabLayout: TabLayout? = null
 
-import com.bizanalyst.phonepay_clone.R;
-
-public class PaymentFragment extends Fragment {
-
-    private Context context;
-    private TabLayout mTabLayout;
-
-    public PaymentFragment() {
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.context = context;
+    private fun initViews(view: View) {
+        mTabLayout = view.findViewById(R.id.tab_payment)
+        mTabLayout?.addTab(mTabLayout!!.newTab().setText("POS"))
+        mTabLayout?.addTab(mTabLayout!!.newTab().setText("SCAN QR"))
+        mTabLayout?.tabGravity = TabLayout.GRAVITY_FILL
     }
 
-    public static PaymentFragment newInstance() {
-        PaymentFragment fragment = new PaymentFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    private void initViews(View view) {
-        mTabLayout = view.findViewById(R.id.tab_payment);
-        mTabLayout.addTab(mTabLayout.newTab().setText("POS"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("SCAN QR"));
-        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-    }
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_payment, container, false);
-        initViews(view);
-
-        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_payment, container, false)
+        initViews(view)
+        
+        mTabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                val position = tab.position
                 if (position == 0) {
-                    Toast.makeText(context, "POS selected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "POS selected", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "SCAN QR selected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "SCAN QR selected", Toast.LENGTH_SHORT).show()
                 }
-
             }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-        });
-
-        return view;
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+        return view
     }
 
+    companion object {
+        @JvmStatic
+        fun newInstance(): PaymentFragment {
+            val fragment = PaymentFragment()
+            val args = Bundle()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 }
