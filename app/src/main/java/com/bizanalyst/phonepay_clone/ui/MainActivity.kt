@@ -1,112 +1,98 @@
 package com.bizanalyst.phonepay_clone.ui
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.*
 import com.bizanalyst.phonepay_clone.R
-import com.bizanalyst.phonepay_clone.fragment.*
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarView
+import com.bizanalyst.phonepay_clone.ui.screens.*
+import com.bizanalyst.phonepay_clone.ui.theme.PhonePayCloneTheme
 
-class MainActivity : AppCompatActivity() {
-    private var mToolbar: Toolbar? = null
-    private var mTxvToolbarTitle: TextView? = null
-    private var mBottomNavigationView: BottomNavigationView? = null
-    private var homeFragment: HomeFragment? = null
-    private var accountFragment: AccountFragment? = null
-    private var offersFragment: OffersFragment? = null
-    private var paymentFragment: PaymentFragment? = null
-    private var transactionsFragment: TransactionsFragment? = null
+sealed class Screen(val route: String, val resourceId: Int, val icon: ImageVector) {
+    object Home : Screen("home", R.string.title_home, Icons.Default.Home)
+    object Offers : Screen("offers", R.string.title_offers, Icons.Default.LocalOffer)
+    object Payment : Screen("payment", R.string.title_payment, Icons.Default.Payment)
+    object Account : Screen("account", R.string.title_my_account, Icons.Default.AccountCircle)
+    object Transactions : Screen("transactions", R.string.title_transactions, Icons.Default.History)
+}
 
-    private val mOnNavigationItemSelectedListener = NavigationBarView.OnItemSelectedListener { item ->
-        val itemId = item.itemId
-        when (itemId) {
-            R.id.navigation_home -> {
-                mTxvToolbarTitle?.setText(R.string.app_name)
-                homeFragment?.let { setUpFragment(it) }
-                true
-            }
-            R.id.navigation_offers -> {
-                mTxvToolbarTitle?.setText(R.string.title_offers)
-                offersFragment?.let { setUpFragment(it) }
-                true
-            }
-            R.id.navigation_payment -> {
-                mTxvToolbarTitle?.setText(R.string.title_payment)
-                paymentFragment?.let { setUpFragment(it) }
-                true
-            }
-            R.id.navigation_account -> {
-                mTxvToolbarTitle?.setText(R.string.title_my_account)
-                accountFragment?.let { setUpFragment(it) }
-                true
-            }
-            R.id.navigation_transactions -> {
-                mTxvToolbarTitle?.setText(R.string.title_transactions)
-                transactionsFragment?.let { setUpFragment(it) }
-                true
-            }
-            else -> false
-        }
-    }
+val items = listOf(
+    Screen.Home,
+    Screen.Offers,
+    Screen.Payment,
+    Screen.Account,
+    Screen.Transactions
+)
 
-    fun initViews() {
-        setContentView(R.layout.activity_main)
-        mToolbar = findViewById(R.id.toolbar)
-        mTxvToolbarTitle = findViewById(R.id.txv_toolbar_title)
-        mBottomNavigationView = findViewById(R.id.navigation)
-        homeFragment = HomeFragment.newInstance()
-        accountFragment = AccountFragment.newInstance()
-        offersFragment = OffersFragment.newInstance()
-        paymentFragment = PaymentFragment.newInstance()
-        transactionsFragment = TransactionsFragment.newInstance()
-    }
-
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initViews()
-
-        setSupportActionBar(mToolbar)
-        supportActionBar?.title = ""
-        mTxvToolbarTitle?.setText(R.string.app_name)
-
-        mBottomNavigationView?.setOnItemSelectedListener(mOnNavigationItemSelectedListener)
-        mBottomNavigationView?.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
-
-        val buildBeginTransaction = supportFragmentManager.beginTransaction()
-        homeFragment?.let { buildBeginTransaction.replace(R.id.container_home, it) }
-        buildBeginTransaction.commit()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_home, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-        return when (itemId) {
-            R.id.menu_invite -> {
-                Toast.makeText(this, "Invite and Earn", Toast.LENGTH_SHORT).show()
-                true
+        setContent {
+            PhonePayCloneTheme {
+                MainScreen()
             }
-            R.id.menu_notification -> {
-                Toast.makeText(this, "Notification", Toast.LENGTH_SHORT).show()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
         }
     }
+}
 
-    private fun setUpFragment(fragment: Fragment) {
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
-        fragmentTransaction.replace(R.id.container_home, fragment)
-        fragmentTransaction.commit()
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MainScreen() {
+    val navController = rememberNavController()
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(id = R.string.app_name)) },
+                actions = {
+                    IconButton(onClick = { /* TODO */ }) {
+                        Icon(Icons.Default.GroupAdd, contentDescription = "Invite")
+                    }
+                    IconButton(onClick = { /* TODO */ }) {
+                        Icon(Icons.Default.Notifications, contentDescription = "Notifications")
+                    }
+                }
+            )
+        },
+        bottomBar = {
+            NavigationBar {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentDestination = navBackStackEntry?.destination
+                items.forEach { screen ->
+                    NavigationBarItem(
+                        icon = { Icon(screen.icon, contentDescription = null) },
+                        label = { Text(stringResource(screen.resourceId)) },
+                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                        onClick = {
+                            navController.navigate(screen.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                    )
+                }
+            }
+        }
+    ) { innerPadding ->
+        NavHost(navController, startDestination = Screen.Home.route, Modifier.padding(innerPadding)) {
+            composable(Screen.Home.route) { HomeScreen() }
+            composable(Screen.Offers.route) { OffersScreen() }
+            composable(Screen.Payment.route) { PaymentScreen() }
+            composable(Screen.Account.route) { AccountScreen() }
+            composable(Screen.Transactions.route) { TransactionsScreen() }
+        }
     }
 }
+
