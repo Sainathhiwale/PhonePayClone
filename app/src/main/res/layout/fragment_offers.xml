@@ -6,7 +6,7 @@
     tools:context=".fragment.OffersFragment">
 
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical">
@@ -22,7 +22,7 @@
                 android:layout_height="155dp"
                 android:background="@color/colorPrimary">
 
-                <android.support.v4.view.ViewPager
+                <androidx.viewpager.widget.ViewPager
                     android:id="@+id/view_pager_offers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -264,7 +264,7 @@
                 android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_bill_pay_offers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -285,7 +285,7 @@
                 android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_offline_merchants"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -306,7 +306,7 @@
                 android:textColor="@android:color/black"
                 android:textStyle="bold" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_online_merchants"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -318,6 +318,6 @@
                 android:background="@color/grey_300" />
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

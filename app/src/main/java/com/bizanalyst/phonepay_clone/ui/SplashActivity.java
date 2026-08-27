@@ -3,7 +3,7 @@ package com.bizanalyst.phonepay_clone.ui;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.bizanalyst.phonepay_clone.R;
