@@ -3,6 +3,8 @@ PhonePe UI Clone Made for assignment of Google Udacity Scholarship. This is just
 
 Made for Clone UI Challenege of Google Udacity Android Developer Scholarship Challenge 2018.
 
+# The PhonePayClone UI is migrated to Jetpack Compose.
+
 # Screencast Gif
 
 
